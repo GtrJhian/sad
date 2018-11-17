@@ -455,11 +455,14 @@ function tbledit(row=null){
 	var pos = $('#viewposition'+ row).text();
     var bday = $('#viewempBday'+ row).text();
 	$('#viewposition'+ row).replaceWith('<td id="chpos'+row+'"><select name="position[]" id="editposition'+row+'" style="margin-right:-30px;">' + 
-            		'<option value="HR">HR</option>' +
-            		'<option value="GM">GM</option>' +
-            		'<option value="Coordinator">Coordinator</option>' +
-            		'<option value="Acco">Acco</option>' +
-            		'<option value="Payroll Master">Payroll master</option>' +
+                    <?php 
+                        $result=$db->query("SELECT * from account_pos");
+                        while($row=$result->fetch_assoc()){
+                            ?>
+                            '<option value="<?=$row['acpos_id']?>"><?=$row['position']?></option>' +
+                            <?php
+                        }
+                    ?>
            	'</select></td>');
     $('#viewempBday'+ row).replaceWith('<td id="chbday'+row+'"><input type="date" style="margin-right:-40px;" name="empBday[]" id="editempBday'+row+'"></td>');
     $('#editempBday'+ row).val(bday);

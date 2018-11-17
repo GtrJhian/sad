@@ -181,12 +181,15 @@
                     <td><strong>Employment Type</strong></td>
                     <td>
                         <div class="form-group"><select class="form-control" name="emptype" id="emptype">
-                            <option selected hidden>Please Choose</option>
-                            <option value="contractual">Contractual</option>
-                            <option value="fixed-term">Fixed-Term</option>   
-                            <option value="probationary">Probationary</option>
-                            <option value="regular">Regular</option>
-                            <option value="seasonal">Seasonal</option>
+                            
+                            <?php
+                                $result=$db->query("SELECT * from employment_type");
+                                while($row=$result->fetch_assoc()){
+                                    ?>
+                                    <option value="<?=$row['emp_type_id']?>"><?=$row['emp_type']?></option>
+                                    <?php
+                                }
+                            ?>
                         </select></div>
                     </td>
                 </tr>

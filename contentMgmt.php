@@ -64,12 +64,12 @@
 									<form action="empPos.php" method="post">
 										<label for="job_pos">Job Position</label>
 										<br>
-										<input type="text" name="job_pos" id="">
+										<input type="text" name="job_pos" id="" required>
 										<br>
 
 										<label for="rate">Rate per hour</label>
 										<br>
-										<input type="text" name="rate" id="">
+										<input type="number" name="rate" id="" required>
 										<br>
 								</div>
 								<div class="modal-footer">
@@ -125,7 +125,7 @@
 									</h3>
 								</div>
 								<div class="modal-body" id="">
-									<form action="empPos.php" method="post">
+									<form action="accPos.php" method="post">
 										<label for="position">Position</label>
 										<br>
 										<input type="text" name="position" id="">
@@ -163,7 +163,7 @@
 						while ($r3 = mysqli_fetch_assoc($res3)) {
 ?>
 							<tr>
-								<td><?php echo $r2['emp_type']; ?></td>
+								<td><?php echo $r3['emp_type']; ?></td>
 							</tr>
 <?php 
 						} 
@@ -184,7 +184,7 @@
 									</h3>
 								</div>
 								<div class="modal-body" id="">
-									<form action="" method="post">
+									<form action="empType.php" method="post">
 										<label for="emp_type">Employment Type</label>
 										<br>
 										<input type="text" name="emp_type" id="">
