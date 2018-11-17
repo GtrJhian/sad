@@ -17,8 +17,17 @@
             "Email"=>$_REQUEST['email'],
             "Permissions"=>$permissions
         ];
-        $db->prepared_query($query,$data,"sssi");
-        $db->log(0,"Users",$data,'user_id',$db->insert_id);
+        if(isset($_REQUEST['account_id'])){
+            $data['account_id']=intval($_REQUEST['account_id']);
+            $query="INSERT INTO users(username,password,email,access,account_id)
+            VALUES(?,?,?,?,?)";
+            $db->prepared_query($query,$data,"sssii");
+            $db->log(0,"Users",$data,'user_id',$db->insert_id);
+        }
+        else{
+            $db->prepared_query($query,$data,"sssi");
+            $db->log(0,"Users",$data,'user_id',$db->insert_id);
+        }
         header("location: ams.php");
     }
     else if($action=='checkPW'){

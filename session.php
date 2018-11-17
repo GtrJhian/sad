@@ -8,6 +8,7 @@
                 $_SESSION['access']=$assoc['access'];
                 $_SESSION['password']=$assoc['password'];
                 $_SESSION['id']=$assoc['id'];
+                $_SESSION['account_id']=intval($assoc['account_id']);
                 $pages=["USERVIEWS/operations.php","USERVIEWS/compBen.php","USERVIEWS/humanResources.php","USERVIEWS/accounting.php","employee.php","ams.php"];
                 for($ctr=0; $ctr<6; $ctr++){
                     if(($_SESSION['access']&0b100000>>$ctr)){

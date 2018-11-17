@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $dbDetails = array(
             'host' => 'localhost',
             'user' => 'root',
@@ -11,8 +11,10 @@ $dbDetails = array(
     $fetch=$_GET['fetch'];
 
     if($fetch=='operations'){   
-
-
+        $filter_account="";
+        if($account_id=intval($_SESSION['account_id'])){
+            $filter_account="WHERE E.account_id=$account_id";
+        }
         $table = <<<EOT
          (
            SELECT G.agency_name, C.account_principal, E.emp_id,
@@ -22,7 +24,7 @@ $dbDetails = array(
             E.emp_man_NBI_expDate, E.emp_man_polClear, E.emp_man_brgyClear
             FROM employee_list as E
             INNER JOIN account_list C ON C.account_id = E.account_id
-            INNER JOIN agency_list G ON G.agency_id = C.agency_id
+            INNER JOIN agency_list G ON G.agency_id = C.agency_id $filter_account
          ) temp
 EOT;
 

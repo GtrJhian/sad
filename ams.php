@@ -83,7 +83,7 @@
                             <tbody>
                                 <tr>
                                     <td><strong>Username</strong></td>
-                                    <td><input class="form-control" type="text" name="username" required minlength=5></td>
+                                    <td><input class="form-control username" type="text" name="username" required minlength=5></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Password</strong></td>
@@ -98,7 +98,7 @@
                                 </tr>
                                 <tr>
                                     <td><strong>E-mail</strong></td>
-                                    <td><input class="form-control" type="email" name="email" required></td>
+                                    <td><input class="form-control email" type="email" name="email" required></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Level of Access</strong></td>
@@ -111,6 +111,17 @@
                                         <label><input type="checkbox" name="permissions[]" value="0">Super Admin</label><br>
                                     </td>
                                 </tr>
+                                <label>Coordinator: <input type="checkbox" id="isCoor"></label>
+                                <select class="form-control" name="account_id" id="account_id">
+                                    <?php
+                                        $result=$db->query("SELECT account_id,account_principal FROM account_list");
+                                        while($row=$result->fetch_assoc()){
+                                            ?>
+                                            <option value="<?=$row['account_id']?>"><?=$row['account_principal']?></option>
+                                            <?php
+                                        }
+                                    ?>
+                                </select>
                             </tbody>
                         </table>
                         <div class="modal-footer">
@@ -178,6 +189,38 @@ $(document).ready(function() {
         else{            
             $(".passwordField")[1].setCustomValidity("");
             $("#addUser").prop("disabled",false);
+        }
+    });
+    
+    var ac_id=$('#account_id');
+    ac_id.hide();
+    $('#isCoor').change(function(){
+        ac_id.toggle();
+        if(ac_id.is(':hidden')){
+            ac_id.prop('name','');
+        }
+        else ac_id.prop('name','account_id');
+    });
+    
+    
+    $('.email').change(function(){
+        var emails=JSON.parse('<?=json_encode($db->query("SELECT email FROM users")->fetch_all(MYSQLI_NUM))?>');
+        for(ctr=0; ctr<emails.length; ctr++){
+            if($('.email')[0].value==emails[ctr]){
+                $('.email')[0].setCustomValidity("Email is already in use");
+                return;
+            }
+            $('.email')[0].setCustomValidity("");
+        }
+    });
+    $('.username').change(function(){
+        var users=JSON.parse('<?=json_encode($db->query("SELECT username FROM users")->fetch_all(MYSQLI_NUM))?>');
+        for(ctr=0; ctr<users.length; ctr++){
+            if($('.username')[0].value==users[ctr]){
+                $('.username')[0].setCustomValidity("Username is already in use");
+                return;
+            }
+            $('.username')[0].setCustomValidity("");
         }
     });
 });
